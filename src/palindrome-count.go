@@ -26,6 +26,9 @@ func countPalindromes(c *gin.Context) {
 }
 
 func isPalindrome(s string) bool {
+    if len(s) <= 1 {
+        return false
+    }
     runes := []rune(s)
     var cleaned []rune
     for _, r := range runes {
