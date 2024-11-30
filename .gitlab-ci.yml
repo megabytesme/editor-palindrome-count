@@ -6,15 +6,13 @@ variables:
   GO_IMAGE: "golang:1.19-alpine"
 
 before_script:
-  - mkdir -p /app
-  - cd /app
+  - apk add --no-cache git
 
 build:
   stage: build
   image: $GO_IMAGE
   script:
-    - apk add --no-cache git
-    - cd src
+    - cd $CI_PROJECT_DIR/src
     - go mod tidy
     - go build -o main .
 
@@ -22,6 +20,5 @@ test:
   stage: test
   image: $GO_IMAGE
   script:
-    - apk add --no-cache git
-    - cd src
+    - cd $CI_PROJECT_DIR/src
     - go test -v ./...
