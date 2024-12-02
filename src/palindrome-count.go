@@ -9,6 +9,17 @@ import (
 
 func main() {
     router := gin.Default()
+    router.Use(func(c *gin.Context) {
+        c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+        c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+        c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+        if c.Request.Method == "OPTIONS" {
+            c.AbortWithStatus(200)
+            return
+        }
+        c.Next()
+    })
+
     router.GET("/count_palindromes", countPalindromes)
     router.Run(":8080")
 }
